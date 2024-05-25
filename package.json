@@ -1,0 +1,34 @@
+{
+    "name": "rab_front",
+    "description": "Frontend part of rainet access battle game. Done in phaser3 using phaser vue-template",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Randomneo/rab_front"
+    },
+    "author": "Rostislav Misyura",
+    "keywords": [
+        "phaser",
+        "phaser3",
+        "vue",
+        "vite"
+    ],
+    "scripts": {
+        "dev": "vite --config vite/config.dev.mjs",
+        "build": "vite build --config vite/config.prod.mjs"
+    },
+    "dependencies": {
+        "phaser": "^3.80.1",
+        "vue": "^3.4.27"
+    },
+    "devDependencies": {
+        "@rushstack/eslint-patch": "^1.10.2",
+        "@vitejs/plugin-vue": "^5.0.4",
+        "@vue/eslint-config-prettier": "^9.0.0",
+        "eslint": "^9.2.0",
+        "eslint-plugin-vue": "^9.26.0",
+        "prettier": "^3.2.5",
+        "terser": "^5.31.0",
+        "vite": "^5.2.11"
+    }
+}
