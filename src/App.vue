@@ -45,7 +45,7 @@ const addSprite = () => {
         const y = Phaser.Math.Between(64, scene.scale.height - 64);
 
         //  `add.sprite` is a Phaser GameObjectFactory method and it returns a Sprite Game Object instance
-        const star = scene.add.plane(x, y, 'background', frame=, width=10, height=10, tile=false);
+        const star = scene.add.plane(x, y, 'background');
         star.setViewHeight(528);
         star.modelRotation = {x: 1.5, y: 0, z: 0};
 
