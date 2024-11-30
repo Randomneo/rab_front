@@ -1,6 +1,7 @@
 import { EventBus } from '../EventBus';
 import { Scene } from 'phaser';
 import { Grid } from '../entities/grid';
+import { Card } from '../entities/card';
 
 export class Game extends Scene
 {
@@ -22,8 +23,32 @@ export class Game extends Scene
             0xccccff, 1,
             0x333333, 1,
         );
+        this.plane = this.add.plane(400, 400, 'star');
+        this.plane.viewPosition.z = 2;
+        this.plane.setScale(0.5);
+        this.poiterPos = undefined;
+
+        this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => {
+            this.pointerPos = pointer.position;
+        });
 
         EventBus.emit('current-scene-ready', this);
+    }
+
+    update(time, delta) {
+        if (this.pointerPos) {
+            let xDelta = this.plane.x - this.pointerPos.x;
+            let yDelta = this.plane.y - this.pointerPos.y;
+
+            let distance = Math.sqrt(xDelta*xDelta + yDelta*yDelta);
+            let moveScale = Math.max(0.0002 * distance, 0.1);
+
+            this.plane.x = this.plane.x - xDelta * moveScale;
+            this.plane.y = this.plane.y - yDelta * moveScale;
+            this.plane.rotateY = - Math.min(Math.max(xDelta * moveScale * 3, -60), 60);
+            this.plane.rotateX = - Math.min(Math.max(yDelta * moveScale * 3, -60), 60);
+
+        }
     }
 
     changeScene ()
