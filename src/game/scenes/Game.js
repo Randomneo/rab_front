@@ -23,9 +23,9 @@ export class Game extends Scene
             0xccccff, 1,
             0x333333, 1,
         );
-        this.plane = this.add.plane(400, 400, 'star');
+        this.plane = this.add.plane(100, 100, 'star');
         this.plane.viewPosition.z = 2;
-        this.plane.setScale(0.5);
+        this.plane.setScale(1);
         this.poiterPos = undefined;
 
         this.input.on(Phaser.Input.Events.POINTER_MOVE, (pointer) => {

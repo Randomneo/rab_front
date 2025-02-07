@@ -1,6 +1,6 @@
 <script setup>
 import Phaser from 'phaser';
-import { ref, toRaw } from 'vue';
+import { ref, toRaw, watchEffect } from 'vue';
 import PhaserGame from './game/PhaserGame.vue';
 
 // The sprite can only be moved in the MainMenu Scene
@@ -10,6 +10,20 @@ const canMoveSprite = ref();
 const phaserRef = ref();
 const chatText = ref();
 const spritePosition = ref({ x: 0, y: 0 });
+const scale = ref(0.6);
+const position = ref(2.0);
+
+
+watchEffect(async () => {
+    const scene = toRaw(phaserRef.value.scene);
+    console.log(scene.plane);
+    scene.plane.viewPosition.z = parseFloat(position.value);
+})
+
+watchEffect(async () => {
+    const scene = toRaw(phaserRef.value.scene);
+    scene.plane.setScale(scale.value);
+})
 
 const changeScene = () => {
     const scene = toRaw(phaserRef.value.scene);
@@ -67,12 +81,25 @@ const addSprite = () => {
 //  This event is emitted from the PhaserGame component:
 function currentScene(scene) {
     canMoveSprite.value = (scene.scene.key !== 'MainMenu');
+    if (scene.scene.key === 'Game') {
+        console.log('set scale');
+        scene.starScale = scale;
+        scene.plane.setScale(scale.value);
+    }
 }
 </script>
 
 <template>
     <PhaserGame ref="phaserRef" @current-active-scene="currentScene" />
     <div>
+        <div>
+            <input type="range" v-model="scale" name="volume" min="0.1" max="1" step="0.01"/>
+            <label for="volume">Volume: {{ scale }}</label>
+        </div>
+        <div>
+            <input type="range" v-model="position" name="volume" min="1" max="4" step="0.1"/>
+            <label for="volume">position: {{ position }}</label>
+        </div>
         <div>
             <button class="button" @click="changeScene">Change Scene</button>
         </div>
